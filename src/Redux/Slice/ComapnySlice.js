@@ -7,7 +7,7 @@ const initialState = {
     companyData: []   
 }
 
-export const getAllCourses = createAsyncThunk('/company/get',async()=>{
+export const getAllCompanies = createAsyncThunk('/company/get',async()=>{
     try {
         const response = axiosInstance.get('/company');
         toast.promise(response,{
@@ -25,7 +25,11 @@ const companySlice = createSlice({
     initialState,
     reducers:{},
     extraReducers:(builder)=>{
-
+            builder.addCase(getAllCompanies.fulfilled,(state,action)=>{
+                if (action.payload) {
+                    state.companyData = [...action.payload]
+                }
+            })
     }
 });
 export default companySlice.reducer;
